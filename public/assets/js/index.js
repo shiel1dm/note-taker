@@ -79,6 +79,7 @@ const handleNoteSave = () => {
 
 // Delete the clicked note
 const handleNoteDelete = (e) => {
+  
   // Prevents the click listener for the list from being called when the button inside of it is clicked
   e.stopPropagation();
 

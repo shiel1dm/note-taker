@@ -1,13 +1,12 @@
 const express = require('express');
 const path = require('path');
 const uuid = require('./bonus/uuid');
+const db = require('./db/db.json');
 const fs = require('fs');
 const util = require('util')
-//
 
-//Test code
 
-//Copied from intstructor modular routing file, explainations to show understanding in notes.
+//Copied from intstructor modular routing file, explainations to show understanding in comments.
 const readFromFile = util.promisify(fs.readFile);
 // using util framework to promise a file to read (ex. fs.readFile)
 
@@ -59,7 +58,7 @@ app.get('/api/notes', (req, res) => {
 
 
 app.post('/api/notes',(req, res) => {
-  
+
   const { title, text } = req.body;
 
   if(req.body){
@@ -79,6 +78,34 @@ app.post('/api/notes',(req, res) => {
     res.json('Error posting')
   }
 })
+
+app.delete('/api/notes/:id', (req, res) => {
+  const i = db.findIndex(notes => notes.id === req.params.id)
+  console.log(i)
+  //db.splice(i, 1)
+  console.log(db)
+
+  //writeToFile('./db/db.json', db)
+  res.send(`successfully deleted note id: ${req.params.id}`)
+});
+  
+
+
+  /**found = db.some(db => db.id === req.params.id)
+  if(found){
+    content = db.filter(note => note.id != req.params.id)
+
+
+    res.json({ msg: 'Note Deleted', notes: db.filter(note => (note.id !== req.params.id))})
+
+    writeToFile('./db/db.json', content)
+
+
+    
+    
+  }else{ res.send('error: please enter a valid id')}
+
+})**/
 
 app.use(express.static(path.join('public')));
 

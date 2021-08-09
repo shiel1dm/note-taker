@@ -1,22 +1,17 @@
 [
     {
-        "title": "Test",
-        "text": "Working static Test",
-        "id": "600e"
+        "title": "2",
+        "text": "2",
+        "id": "0670"
     },
     {
-        "title": "Note 1",
-        "text": "This is the first working note of the app",
-        "id": "3936"
+        "title": "3",
+        "text": "3",
+        "id": "0031"
     },
     {
-        "title": "Note 2",
-        "text": "Test b4 push\n",
-        "id": "1d30"
-    },
-    {
-        "title": "Heroku",
-        "text": "Testing b4 deployment",
-        "id": "fc2a"
+        "title": "4",
+        "text": "4",
+        "id": "fef0"
     }
 ]
