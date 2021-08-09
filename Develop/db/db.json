@@ -1,6 +1,17 @@
 [
     {
-        "title":"Test Title",
-        "text":"Test text"
+        "title": "Test",
+        "text": "Working static Test",
+        "id": "600e"
+    },
+    {
+        "title": "Note 1",
+        "text": "This is the first working note of the app",
+        "id": "3936"
+    },
+    {
+        "title": "Note 2",
+        "text": "Test b4 push\n",
+        "id": "1d30"
     }
 ]
