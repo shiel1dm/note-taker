@@ -59,7 +59,7 @@ app.get('/api/notes', (req, res) => {
 
 
 app.post('/api/notes',(req, res) => {
-  console.log('test')
+  
   const { title, text } = req.body;
 
   if(req.body){
