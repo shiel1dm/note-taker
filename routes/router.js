@@ -19,7 +19,7 @@ const writeToFile = (destination, content) =>
  * writeToFile passes in two variables, the fs destination and the content being added to the file.
  * It then stringify's the content passed in, with a null replacer, and a '4' space, or white space
  * added for readablity.
- * I'll be honest, I have no idea what the ? is for, but an answer in my grade would be helpful! 
+ * then if there is an error it passes an error messages otherwise it logs that the Data was written
  */
 
 const readAndappend = (content, file) => {
@@ -82,16 +82,14 @@ router.post('/api/notes',(req, res) => {
 
 router.delete('/api/notes/:id', (req, res) => {
   const i = db.findIndex(notes => notes.id === req.params.id)
-  console.log(i)
-  //console.log(notes)
   db.splice(i, 1)
-  console.log(db)
+  
 
   res.send(`successfully deleted note id: ${req.params.id}`)
   fs.writeFile('./db/db.json', JSON.stringify(db, null, 4), (err) => {
     if (err) throw err;
 
-    console.log('deleted.')
+    console.log('Successfully deleted note.')
 
   })
 });
