@@ -1,17 +1,7 @@
 [
     {
-        "title": "2",
-        "text": "2",
-        "id": "0670"
-    },
-    {
-        "title": "3",
-        "text": "3",
-        "id": "0031"
-    },
-    {
-        "title": "4",
-        "text": "4",
-        "id": "fef0"
+        "title": "I did it!",
+        "text": "Homework and bonus question complete! Now to deployed to heroku!",
+        "id": "0e26"
     }
 ]

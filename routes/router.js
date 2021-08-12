@@ -1,7 +1,8 @@
 const express = require('express');
-const path = require('path');
-const uuid = require('./bonus/uuid');
-const db = require('./db/db.json');
+const router = express.Router()
+const uuid = require('./uuid');
+const path = require('path')
+const db = require('../db/db.json');
 const fs = require('fs');
 const util = require('util')
 
@@ -21,7 +22,7 @@ const writeToFile = (destination, content) =>
  * I'll be honest, I have no idea what the ? is for, but an answer in my grade would be helpful! 
  */
 
-const readAndAppend = (content, file) => {
+const readAndappend = (content, file) => {
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) {
       console.error(err);
@@ -34,30 +35,30 @@ const readAndAppend = (content, file) => {
 };
 
 /**
- * readAndAppend takes in parameters of content and file, the content I'm passing in to my db file.
+ * readAndappend takes in parameters of content and file, the content I'm passing in to my db file.
  * if there is no error, it creates an object, makes that object readable, and then pushes that content into the
  * writeToFile function, which again writes everything to the db file.
  */
 
 
-const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.get('/notes', (req,res) =>{
-  res.sendFile(path.join(__dirname, '/public/notes.html'))
+router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
+
+router.get('/notes', (req,res) =>{
+  res.sendFile(path.join(__dirname, '../public/notes.html'))
   
 });
 
-app.get('/api/notes', (req, res) => {
+router.get('/api/notes', (req, res) => {
   readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
 
 });
 
 
 
-app.post('/api/notes',(req, res) => {
+router.post('/api/notes',(req, res) => {
 
   const { title, text } = req.body;
 
@@ -71,7 +72,7 @@ app.post('/api/notes',(req, res) => {
       status: 'test success',
       body: newNote,
     }
-    readAndAppend(newNote, './db/db.json');
+    readAndappend(newNote, './db/db.json');
     res.json(response);
 
   } else{
@@ -79,36 +80,21 @@ app.post('/api/notes',(req, res) => {
   }
 })
 
-app.delete('/api/notes/:id', (req, res) => {
+router.delete('/api/notes/:id', (req, res) => {
   const i = db.findIndex(notes => notes.id === req.params.id)
   console.log(i)
-  //db.splice(i, 1)
+  //console.log(notes)
+  db.splice(i, 1)
   console.log(db)
 
-  //writeToFile('./db/db.json', db)
   res.send(`successfully deleted note id: ${req.params.id}`)
+  fs.writeFile('./db/db.json', JSON.stringify(db, null, 4), (err) => {
+    if (err) throw err;
+
+    console.log('deleted.')
+
+  })
 });
-  
 
 
-  /**found = db.some(db => db.id === req.params.id)
-  if(found){
-    content = db.filter(note => note.id != req.params.id)
-
-
-    res.json({ msg: 'Note Deleted', notes: db.filter(note => (note.id !== req.params.id))})
-
-    writeToFile('./db/db.json', content)
-
-
-    
-    
-  }else{ res.send('error: please enter a valid id')}
-
-})**/
-
-app.use(express.static(path.join('public')));
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => console.log(`server started on port ${PORT}`));
+module.exports = router
